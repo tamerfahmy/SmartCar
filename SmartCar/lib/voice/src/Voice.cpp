@@ -2,6 +2,7 @@
 #include <arduino.h>
 #include "OSConstants.h"
 #include "voice.h"
+#include "SoftwareSerial.h"
 
 namespace Modules
 {

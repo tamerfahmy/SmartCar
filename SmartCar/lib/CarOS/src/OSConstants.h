@@ -13,10 +13,20 @@
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 #define OLED_RESET -1    // Reset pin # (or -1 if sharing Arduino reset pin)
+#define FLIP_SCREEN 1    // Rotates the screen 180 degree (0 default, 1 to flip)
 
 /*Voice*/
 #define V_TX 2
 #define V_RX 4
-#define V_VOLUME 18 //Set volume value (0~30).
+#define V_VOLUME 20 //Set volume value (0~30).
 #define V_EQ DFPLAYER_EQ_NORMAL
 #define V_TEST(selector) (selector == 0 ? 1 : 1) // The selector = 0, means folder number, else file number
+
+/** Ultralsonic Sensor */
+#define TRIG_PIN_S0 10 // Buttom Sensor
+#define TRIG_PIN_S1 10 // Top left sensor
+#define TRIG_PIN_S2 10 // Top right sensor
+#define ECHO_PIN 3
+#define U_BUTTOM 0
+#define U_TOP_LEFT 1
+#define U_TOP_RIGHT 2

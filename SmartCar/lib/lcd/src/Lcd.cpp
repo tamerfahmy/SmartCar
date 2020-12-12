@@ -18,6 +18,11 @@ namespace Modules
         display = new DisplaySSD1306_128x64_I2C(-1);
         display->begin();
         display->clear();
+        if (FLIP_SCREEN)
+        {
+            display->getInterface().flipHorizontal(1);
+            display->getInterface().flipVertical(1);
+        }
         display->fill(0x00);
         display->setFixedFont(ssd1306xled_font8x16);
         initialized = true;

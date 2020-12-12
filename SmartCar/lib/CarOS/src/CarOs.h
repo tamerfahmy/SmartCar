@@ -10,6 +10,7 @@
 #include "Engine.h"
 #include "lcd.h"
 #include "voice.h"
+#include "Ultrasonic.h"
 
 class CarOs
 {
@@ -19,6 +20,9 @@ public:
     Modules::Lcd *lcd;
     Modules::Engine *carEngine;
     Modules::Voice *voice;
+    Modules::Ultrasonic *buttomUltrasonicSensor;
+    Modules::Ultrasonic *topRightUltrasonicSensor;
+    Modules::Ultrasonic *topLeftUltrasonicSensor;
 
 private:
     Modules::BaseModule *modulesArray[10];

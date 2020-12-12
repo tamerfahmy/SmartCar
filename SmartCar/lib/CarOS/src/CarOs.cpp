@@ -69,6 +69,15 @@ void CarOs::createModulesInstances()
     carEngine = new Modules::Engine();
     modules.push_back(carEngine);
 
+    buttomUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S0, ECHO_PIN, U_BUTTOM);
+    modules.push_back(buttomUltrasonicSensor);
+
+    // topLeftUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S1, ECHO_PIN, U_TOP_LEFT);
+    // modules.push_back(topLeftUltrasonicSensor);
+
+    // topRightUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S2, ECHO_PIN, U_TOP_RIGHT);
+    // modules.push_back(topRightUltrasonicSensor);
+
     voice = new Modules::Voice();
     modules.push_back(voice);
 }
