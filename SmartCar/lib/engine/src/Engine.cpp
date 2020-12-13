@@ -46,8 +46,21 @@ namespace Modules
     this->in3 = IN3;
     this->in4 = IN4;
 
+    initPinMode();
+
     direction = STOP;
     return true;
+  }
+
+  void Engine::initPinMode()
+  {
+    // Motor-driven port configuration
+    pinMode(this->in1, OUTPUT);
+    pinMode(this->in2, OUTPUT);
+    pinMode(this->in3, OUTPUT);
+    pinMode(this->in4, OUTPUT);
+    pinMode(this->ena, OUTPUT);
+    pinMode(this->enb, OUTPUT);
   }
 
   void Engine::test()

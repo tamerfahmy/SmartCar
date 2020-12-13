@@ -15,29 +15,28 @@
 class CarOs
 {
 public:
-    Vector<Modules::BaseModule *> modules;
-    BaseConsole *console;
-    Modules::Lcd *lcd;
-    Modules::Engine *carEngine;
-    Modules::Voice *voice;
-    Modules::Ultrasonic *buttomUltrasonicSensor;
-    Modules::Ultrasonic *topRightUltrasonicSensor;
-    Modules::Ultrasonic *topLeftUltrasonicSensor;
+    static Vector<Modules::BaseModule *> modules;
+    static BaseConsole *console;
+    static Modules::Lcd *lcd;
+    static Modules::Engine *carEngine;
+    static Modules::Voice *voice;
+    static Modules::Ultrasonic *buttomUltrasonicSensor;
+    static Modules::Ultrasonic *topRightUltrasonicSensor;
+    static Modules::Ultrasonic *topLeftUltrasonicSensor;
 
 private:
-    Modules::BaseModule *modulesArray[10];
+    static Modules::BaseModule *modulesArray[10];
 
 public:
-    CarOs();
-    ~CarOs();
-
-    void boot();
-    void shutdown();
-    void restart();
+    static void boot();
+    static void shutdown();
+    static void restart();
+    static void main();
 
 private:
-    bool initConsole();
-    bool initLcd();
-    void createModulesInstances();
+    static bool initConsole();
+    static bool initLcd();
+    static void createModulesInstances();
+    static void echoCheck();
 };
 #endif

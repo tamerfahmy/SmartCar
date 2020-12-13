@@ -48,6 +48,7 @@ namespace Modules
         virtual bool init();
 
     private:
+        void initPinMode();
         void setDirection(char direction);
         void accelerate(int16_t maxSpeed, int16_t aFactor = 1, int16_t bFactor = 1);
     };

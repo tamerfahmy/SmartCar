@@ -6,13 +6,18 @@
 #include "SerialConsole.h"
 #include <Vector.h>
 
-CarOs::CarOs()
-{
-}
+// Public
+Vector<Modules::BaseModule *> CarOs::modules;
+BaseConsole *CarOs::console;
+Modules::Lcd *CarOs::lcd;
+Modules::Engine *CarOs::carEngine;
+Modules::Voice *CarOs::voice;
+Modules::Ultrasonic *CarOs::buttomUltrasonicSensor;
+Modules::Ultrasonic *CarOs::topRightUltrasonicSensor;
+Modules::Ultrasonic *CarOs::topLeftUltrasonicSensor;
 
-CarOs::~CarOs()
-{
-}
+// Private
+Modules::BaseModule *CarOs::modulesArray[10];
 
 void CarOs::boot()
 {
@@ -80,4 +85,10 @@ void CarOs::createModulesInstances()
 
     voice = new Modules::Voice();
     modules.push_back(voice);
+}
+
+void CarOs::main()
+{
+    Serial.println(buttomUltrasonicSensor->getDistance());
+    delay(500);
 }
