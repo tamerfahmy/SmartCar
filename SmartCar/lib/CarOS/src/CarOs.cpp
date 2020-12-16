@@ -13,8 +13,8 @@ Modules::Lcd *CarOs::lcd;
 Modules::Engine *CarOs::carEngine;
 Modules::Voice *CarOs::voice;
 Modules::Ultrasonic *CarOs::ultrasonicArray;
+Modules::ServoMotor *CarOs::servoMotor;
 
-// Private
 Modules::BaseModule *CarOs::modulesArray[10];
 
 void CarOs::boot()
@@ -73,14 +73,20 @@ void CarOs::createModulesInstances()
 {
     modules.setStorage(modulesArray, 0);
 
+    // Create Engine
     carEngine = new Modules::Engine();
     modules.push_back(carEngine);
 
+    // Create Ultrasonic array
     uint8_t ultrasonicSensorsTriggerPins[U_NUMBER_OF_SENSORS] = {U_TRIG_PIN_S0, U_TRIG_PIN_S1, U_TRIG_PIN_S2};
-
     ultrasonicArray = new Modules::Ultrasonic(ultrasonicSensorsTriggerPins, U_ECHO_PIN, U_NUMBER_OF_SENSORS);
     modules.push_back(ultrasonicArray);
 
+    // Create Servo
+    servoMotor = new Modules::ServoMotor(SERVO_PIN, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
+    modules.push_back(servoMotor);
+
+    // Create Voice
     voice = new Modules::Voice();
     modules.push_back(voice);
 }
@@ -88,11 +94,21 @@ void CarOs::createModulesInstances()
 void CarOs::main()
 {
     double *dist = ultrasonicArray->getDistances();
+    double avgDistance = 0;
     for (uint8_t i = 0; i < 3; i++)
     {
+        avgDistance += dist[i];
+
         Serial.print(i);
         Serial.print(":");
         Serial.println(dist[i]);
+    }
+    avgDistance = avgDistance / 3;
+    if (avgDistance > 0 && avgDistance < 10)
+    {
+        carEngine->back(150);
+        carEngine->stop();
+        avgDistance = 0;
     }
     delay(500);
 }

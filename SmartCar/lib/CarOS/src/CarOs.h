@@ -11,6 +11,7 @@
 #include "lcd.h"
 #include "voice.h"
 #include "Ultrasonic.h"
+#include "ServoMotor.h"
 
 class CarOs
 {
@@ -21,6 +22,7 @@ public:
     static Modules::Engine *carEngine;
     static Modules::Voice *voice;
     static Modules::Ultrasonic *ultrasonicArray;
+    static Modules::ServoMotor *servoMotor;
 
 private:
     static Modules::BaseModule *modulesArray[10];

@@ -27,6 +27,11 @@
 #define U_TRIG_PIN_S0 10   // Buttom Sensor
 #define U_TRIG_PIN_S1 10   // Top left sensor
 #define U_TRIG_PIN_S2 10   // Top right sensor
-#define U_ECHO_PIN 3       // Shared Echo PIN
+#define U_ECHO_PIN 13      // Shared Echo PIN
 #define U_TEMPRTURE 20.0   // Temprature
 #define U_MAX_DISTANCE 400 // Maximum sensor distance, if 0 or exceeded the maximum then return -1
+
+// Servo Motor
+#define SERVO_PIN 3
+#define SERVO_MIN_ANGLE 5
+#define SERVO_MAX_ANGLE 175
