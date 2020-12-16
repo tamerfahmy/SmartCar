@@ -5,11 +5,15 @@
 
 namespace Modules
 {
-    Ultrasonic::Ultrasonic(uint8_t trg_pin, uint8_t echo_pin, uint8_t position)
+    Ultrasonic::Ultrasonic(uint8_t *trgPins, uint8_t echoPin, uint8_t numberOfSensors)
     {
-        this->trg_pin = trg_pin;
-        this->echo_pin = echo_pin;
-        this->position = position;
+        this->echoPin = echoPin;
+        this->numberOfSensors = numberOfSensors;
+
+        for (uint8_t i = 0; i < numberOfSensors; i++)
+        {
+            this->trgPins[i] = trgPins[i];
+        }
     }
 
     Ultrasonic::~Ultrasonic()
@@ -18,12 +22,13 @@ namespace Modules
 
     bool Ultrasonic::init()
     {
-        pinMode(this->trg_pin, OUTPUT);
-        pinMode(this->echo_pin, INPUT);
 
-        distanceSensor = new HCSR04(this->trg_pin, this->echo_pin);
-        initialized = true;
-        return initialized;
+        for (uint8_t i = 0; i < this->numberOfSensors; i++)
+            pinMode(this->trgPins[i], OUTPUT);
+
+        pinMode(this->echoPin, INPUT);
+
+        return initialized = true;
     }
 
     void Ultrasonic::test()
@@ -32,57 +37,49 @@ namespace Modules
             Serial.println("Failed initializing ultrsonic");
         else
         {
-            unsigned int distance = distanceSensor->dist(0);
+            double distance = this->getDistance(0);
             Serial.print("Testing distance for ultrasonice sensor at position (");
-            Serial.print(position);
             Serial.print("): ");
             Serial.print(distance);
             Serial.println(" cm");
         }
     }
 
-    float Ultrasonic::getDistance()
+    /**
+     * Gets specific Ultrasonic sensor distance
+     */
+    double Ultrasonic::getDistance(uint8_t i, float temperature)
     {
-        if (distanceSensor->dist(0) < 400)
-            return distanceSensor->dist(0);
+        delay(50);
+        // Make sure that trigger pin is LOW.
+        digitalWrite(this->trgPins[i], LOW);
+        delayMicroseconds(2);
+        // Hold trigger for 10 microseconds, which is signal for sensor to measure distance.
+        digitalWrite(this->trgPins[i], HIGH);
+        delayMicroseconds(10);
+        digitalWrite(this->trgPins[i], LOW);
+        // Measure the length of echo signal, which is equal to the time needed for sound to go there and back.
+        unsigned long durationMicroSec = pulseIn(this->echoPin, HIGH);
+        double speedOfSoundInCmPerMs = 0.03313 + 0.0000606 * temperature; // Cair ≈ (331.3 + 0.606 ⋅ ϑ) m/s
+        double distanceCm = durationMicroSec / 2.0 * speedOfSoundInCmPerMs;
+        if (distanceCm > U_MAX_DISTANCE)
+            return -1.0;
         else
-            return 400;
+            return distanceCm;
     }
 
-    // double measureDistanceCm(float temperature)
-    // {
-    //     // Make sure that trigger pin is LOW.
-    //     digitalWrite(triggerPin, LOW);
-    //     delayMicroseconds(2);
-    //     // Hold trigger for 10 microseconds, which is signal for sensor to measure distance.
-    //     digitalWrite(triggerPin, HIGH);
-    //     delayMicroseconds(10);
-    //     digitalWrite(triggerPin, LOW);
-    //     // Measure the length of echo signal, which is equal to the time needed for sound to go there and back.
-    //     unsigned long durationMicroSec = pulseIn(echoPin, HIGH);
+    /**
+     * Get Ultrasonic array distances
+     */
+    double *Ultrasonic::getDistances(float temperature)
+    {
+        double *distances = new double[this->numberOfSensors];
 
-    //     double speedOfSoundInCmPerMs = 0.03313 + 0.0000606 * temperature; // Cair ≈ (331.3 + 0.606 ⋅ ϑ) m/s
-    //     double distanceCm = durationMicroSec / 2.0 * speedOfSoundInCmPerMs;
-    //     if (distanceCm == 0 || distanceCm > 400)
-    //     {
-    //         return -1.0;
-    //     }
-    //     else
-    //     {
-    //         return distanceCm;
-    //     }
-    // }
+        for (uint8_t i = 0; i < this->numberOfSensors; i++)
+        {
+            distances[i] = getDistance(i, temperature);
+        }
 
-    // float HCSR04::dist(int n) const
-    // {
-    //     digitalWrite(this->out, LOW);
-    //     delayMicroseconds(2);
-    //     digitalWrite(this->out, HIGH);
-    //     delayMicroseconds(10);
-    //     digitalWrite(this->out, LOW);
-    //     noInterrupts();
-    //     float d = pulseIn(this->echo[n], HIGH);
-    //     interrupts();
-    //     return d / 58.0;
-    // }
+        return distances;
+    }
 } // namespace Modules

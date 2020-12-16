@@ -20,9 +20,7 @@ public:
     static Modules::Lcd *lcd;
     static Modules::Engine *carEngine;
     static Modules::Voice *voice;
-    static Modules::Ultrasonic *buttomUltrasonicSensor;
-    static Modules::Ultrasonic *topRightUltrasonicSensor;
-    static Modules::Ultrasonic *topLeftUltrasonicSensor;
+    static Modules::Ultrasonic *ultrasonicArray;
 
 private:
     static Modules::BaseModule *modulesArray[10];

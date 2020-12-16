@@ -23,10 +23,10 @@
 #define V_TEST(selector) (selector == 0 ? 1 : 1) // The selector = 0, means folder number, else file number
 
 /** Ultralsonic Sensor */
-#define TRIG_PIN_S0 10 // Buttom Sensor
-#define TRIG_PIN_S1 10 // Top left sensor
-#define TRIG_PIN_S2 10 // Top right sensor
-#define ECHO_PIN 3
-#define U_BUTTOM 0
-#define U_TOP_LEFT 1
-#define U_TOP_RIGHT 2
+#define U_NUMBER_OF_SENSORS 3
+#define U_TRIG_PIN_S0 10   // Buttom Sensor
+#define U_TRIG_PIN_S1 10   // Top left sensor
+#define U_TRIG_PIN_S2 10   // Top right sensor
+#define U_ECHO_PIN 3       // Shared Echo PIN
+#define U_TEMPRTURE 20.0   // Temprature
+#define U_MAX_DISTANCE 400 // Maximum sensor distance, if 0 or exceeded the maximum then return -1

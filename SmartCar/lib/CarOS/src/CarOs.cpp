@@ -12,15 +12,17 @@ BaseConsole *CarOs::console;
 Modules::Lcd *CarOs::lcd;
 Modules::Engine *CarOs::carEngine;
 Modules::Voice *CarOs::voice;
-Modules::Ultrasonic *CarOs::buttomUltrasonicSensor;
-Modules::Ultrasonic *CarOs::topRightUltrasonicSensor;
-Modules::Ultrasonic *CarOs::topLeftUltrasonicSensor;
+Modules::Ultrasonic *CarOs::ultrasonicArray;
 
 // Private
 Modules::BaseModule *CarOs::modulesArray[10];
 
 void CarOs::boot()
 {
+    // Builtin LED configuration
+    pinMode(LED_BUILTIN, OUTPUT);
+    Serial.begin(9600);
+
     // initialize OS Console
     initConsole();
     initLcd();
@@ -74,14 +76,10 @@ void CarOs::createModulesInstances()
     carEngine = new Modules::Engine();
     modules.push_back(carEngine);
 
-    buttomUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S0, ECHO_PIN, U_BUTTOM);
-    modules.push_back(buttomUltrasonicSensor);
+    uint8_t ultrasonicSensorsTriggerPins[U_NUMBER_OF_SENSORS] = {U_TRIG_PIN_S0, U_TRIG_PIN_S1, U_TRIG_PIN_S2};
 
-    // topLeftUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S1, ECHO_PIN, U_TOP_LEFT);
-    // modules.push_back(topLeftUltrasonicSensor);
-
-    // topRightUltrasonicSensor = new Modules::Ultrasonic(TRIG_PIN_S2, ECHO_PIN, U_TOP_RIGHT);
-    // modules.push_back(topRightUltrasonicSensor);
+    ultrasonicArray = new Modules::Ultrasonic(ultrasonicSensorsTriggerPins, U_ECHO_PIN, U_NUMBER_OF_SENSORS);
+    modules.push_back(ultrasonicArray);
 
     voice = new Modules::Voice();
     modules.push_back(voice);
@@ -89,6 +87,12 @@ void CarOs::createModulesInstances()
 
 void CarOs::main()
 {
-    Serial.println(buttomUltrasonicSensor->getDistance());
+    double *dist = ultrasonicArray->getDistances();
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        Serial.print(i);
+        Serial.print(":");
+        Serial.println(dist[i]);
+    }
     delay(500);
 }

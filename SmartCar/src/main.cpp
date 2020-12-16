@@ -7,16 +7,6 @@
 
 void setup()
 {
-  // pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(9600);
-
-  // Builtin LED configuration
-  pinMode(LED_BUILTIN, OUTPUT);
-
-  // Ultrasonic Sensor configuration
-  // pinMode(TRIG_PIN_S0, OUTPUT);
-  // pinMode(ECHO_PIN, INPUT);
-
   // Car OS
   CarOs::boot();
 }
