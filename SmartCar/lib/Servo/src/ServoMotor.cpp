@@ -23,6 +23,8 @@ namespace Modules
 
     void ServoMotor::test()
     {
+        this->moveToAngle(80);
+        this->moveToAngle(100);
         this->moveToAngle(90);
     }
 
