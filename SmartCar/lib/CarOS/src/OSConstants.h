@@ -1,4 +1,9 @@
 #define CAR_OS_VERSION "1.0.0"
+#define CAR_DEFAULT_MODE 16738455
+#define CAR_IR_MODE_KEY 16738455        // IR remote btn #1
+#define CAR_BLUETOOTH_MODE_KEY 16750695 // IR remote btn #2
+#define CAR_AUTO_MODE_KEY 16756815      // IR remote btn #3
+#define CAR_LINE_MODE_KEY 167568110     // IR remote btn #4
 
 /*Motor drive module*/
 #define ENA 5
@@ -18,7 +23,7 @@
 /*Voice*/
 #define V_TX 2
 #define V_RX 4
-#define V_VOLUME 20 //Set volume value (0~30).
+#define V_VOLUME 30 //Set volume value (0~30).
 #define V_EQ DFPLAYER_EQ_NORMAL
 #define V_TEST(selector) (selector == 0 ? 1 : 1) // The selector = 0, means folder number, else file number
 
@@ -35,3 +40,12 @@
 #define SERVO_PIN 3
 #define SERVO_MIN_ANGLE 5
 #define SERVO_MAX_ANGLE 175
+
+// IR
+#define IR_PIN 12             // IR RCV PIN
+#define IR_DEFAULT 4294967295 // Unkown
+#define IR_FORWARD 16736925   // FORWARD
+#define IR_BACKWARD 16754775  // BACK
+#define IR_LEFT 16720605      // LEFT
+#define IR_RIGHT 16761405     // RIGHT
+#define IR_STOP 16712445      // STOP

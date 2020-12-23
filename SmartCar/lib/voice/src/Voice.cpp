@@ -46,7 +46,8 @@ namespace Modules
             Serial.println("Failed initializing Voice");
         else
         {
-            player->playLargeFolder(V_TEST(0), V_TEST(1)); // Play the test sound
+            player->playFolder(1, 1);
+            delay(1000); // Play the test sound
         }
     }
 } // namespace Modules
