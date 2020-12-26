@@ -92,11 +92,12 @@ namespace Modules
   void Engine::forward(int16_t carSpeed, unsigned int period_ms)
   {
     direction = FORWARD;
+    accelerate(carSpeed);
+
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-    accelerate(carSpeed);
     delayPeriod(period_ms);
   }
   /*
@@ -105,11 +106,11 @@ namespace Modules
   void Engine::back(int16_t carSpeed, unsigned int period_ms)
   {
     direction = BACKWARD;
+    accelerate(carSpeed);
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    accelerate(carSpeed);
     delayPeriod(period_ms);
   }
   /*
@@ -118,11 +119,11 @@ namespace Modules
   void Engine::left(int16_t carSpeed, unsigned int period_ms)
   {
     direction = LEFT;
+    accelerate(carSpeed);
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-    accelerate(carSpeed);
     delayPeriod(period_ms);
   }
   /*
@@ -131,11 +132,11 @@ namespace Modules
   void Engine::right(int16_t carSpeed, unsigned int period_ms)
   {
     direction = RIGHT;
+    accelerate(carSpeed);
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    accelerate(carSpeed);
     delayPeriod(period_ms);
   }
 
@@ -145,12 +146,12 @@ namespace Modules
   void Engine::forwardLeft(int16_t carSpeed, unsigned int period_ms)
   {
     direction = FORWARD_LEFT;
+    analogWrite(ena, carSpeed / 2);
+    analogWrite(enb, carSpeed);
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-    analogWrite(ena, carSpeed / 2);
-    analogWrite(enb, carSpeed);
     //accelerate(carSpeed, 1, 2);
     delayPeriod(period_ms);
   }
@@ -161,12 +162,12 @@ namespace Modules
   void Engine::forwardRight(int16_t carSpeed, unsigned int period_ms)
   {
     direction = FORWARD_RIGHT;
+    analogWrite(ena, carSpeed);
+    analogWrite(enb, carSpeed / 2);
     digitalWrite(in1, HIGH);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-    analogWrite(ena, carSpeed);
-    analogWrite(enb, carSpeed / 2);
     //accelerate(carSpeed / 2, 2, 1);
     delayPeriod(period_ms);
   }
@@ -177,12 +178,12 @@ namespace Modules
   void Engine::backLeft(int16_t carSpeed, unsigned int period_ms)
   {
     direction = BACKWARD_LEFT;
+    analogWrite(ena, carSpeed / 2);
+    analogWrite(enb, carSpeed);
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    analogWrite(ena, carSpeed / 2);
-    analogWrite(enb, carSpeed);
     //accelerate(carSpeed / 2, 1, 2);
     delayPeriod(period_ms);
   }
@@ -193,12 +194,12 @@ namespace Modules
   void Engine::backRight(int16_t carSpeed, unsigned int period_ms)
   {
     direction = BACKWARD_RIGHT;
+    analogWrite(ena, carSpeed);
+    analogWrite(enb, carSpeed / 2);
     digitalWrite(in1, LOW);
     digitalWrite(in2, HIGH);
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-    analogWrite(ena, carSpeed);
-    analogWrite(enb, carSpeed / 2);
     //accelerate(carSpeed, 2, 1);
     delayPeriod(period_ms);
   }
@@ -215,20 +216,23 @@ namespace Modules
 
   void Engine::accelerate(int16_t maxSpeed, int16_t aFactor, int16_t bFactor)
   {
-    for (int i = 0; i <= maxSpeed; i += 2)
-    {
-      analogWrite(ena, i * aFactor);
-      analogWrite(enb, i * bFactor);
-      delay(20);
-    }
+    // for (int i = 0; i <= maxSpeed; i += 2)
+    // {
+    //   analogWrite(ena, i * aFactor);
+    //   analogWrite(enb, i * bFactor);
+    //   delay(20);
+    // }
+
+    analogWrite(ena, maxSpeed);
+    analogWrite(enb, maxSpeed);
   }
 
   void Engine::delayPeriod(unsigned int period_ms)
   {
-    if (period_ms != 0)
-    {
-      delay(period_ms);
-      stop();
-    }
+    // if (period_ms != 0)
+    // {
+    //   delay(period_ms);
+    //   stop();
+    // }
   }
 } // namespace Modules

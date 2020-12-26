@@ -46,7 +46,7 @@ namespace Modules
             Serial.println("Failed initializing Voice");
         else
         {
-            player->playFolder(1, 1);
+            player->playFolder(V_SYSTEM_FOLDER, V_TESTING_VOICE);
             delay(1000); // Play the test sound
         }
     }

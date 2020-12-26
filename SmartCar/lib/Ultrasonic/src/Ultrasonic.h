@@ -24,6 +24,7 @@ namespace Modules
         virtual void test();
         double getDistance(uint8_t i, float temperature = U_TEMPRTURE);
         double *getDistances(float temperature = U_TEMPRTURE);
+        double getAvgDistance(float temperature = U_TEMPRTURE);
     };
 } // namespace Modules
 #endif

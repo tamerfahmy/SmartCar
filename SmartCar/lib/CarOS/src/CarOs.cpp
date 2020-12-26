@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <arduino.h>
 #include "CarOs.h"
+#include "Ultilities.h"
 #include "OSConstants.h"
 #include "LcdConsole.h"
 #include "SerialConsole.h"
@@ -59,8 +60,8 @@ void CarOs::boot()
     modules.push_back(lcd);
 
     lcd->display->clear();
-    lcd->display->printFixed(40, 22, "READY", STYLE_BOLD);
-    voice->player->playFolder(1, 10);
+    lcd->printFixedCenter(24, "READY", STYLE_BOLD);
+    voice->player->playFolder(V_SYSTEM_FOLDER, V_READY);
     delay(1000);
 
     initModes();
@@ -135,8 +136,8 @@ void CarOs::switchMode(uint32_t mode)
             currentModeIndex = 0;
             modes.at(currentModeIndex)->stop();
             lcd->display->clear();
-            lcd->display->printFixed(40, 22, "IR Mode", STYLE_BOLD);
-            voice->player->playFolder(1, 6);
+            lcd->printFixedCenter(24, "IR Mode", STYLE_NORMAL);
+            voice->player->playFolder(V_SYSTEM_FOLDER, V_IR_MODE);
             delay(1000);
         }
         break;
@@ -146,8 +147,8 @@ void CarOs::switchMode(uint32_t mode)
             currentModeIndex = 1;
             modes.at(currentModeIndex)->stop();
             lcd->display->clear();
-            lcd->display->printFixed(40, 22, "Bluetooth Mode", STYLE_BOLD);
-            voice->player->playFolder(1, 7);
+            lcd->printFixedCenter(24, "Bluetooth Mode", STYLE_NORMAL);
+            voice->player->playFolder(V_SYSTEM_FOLDER, V_BLUETOOTH_MODE);
             delay(1000);
         }
         break;
@@ -157,8 +158,8 @@ void CarOs::switchMode(uint32_t mode)
             currentModeIndex = 2;
             modes.at(currentModeIndex)->stop();
             lcd->display->clear();
-            lcd->display->printFixed(40, 22, "Auto Mode", STYLE_BOLD);
-            voice->player->playFolder(1, 8);
+            lcd->printFixedCenter(24, "Auto Mode", STYLE_NORMAL);
+            voice->player->playFolder(V_SYSTEM_FOLDER, V_AUTO_MODE);
             delay(1000);
         }
         break;
@@ -168,8 +169,8 @@ void CarOs::switchMode(uint32_t mode)
             currentModeIndex = 3;
             modes.at(currentModeIndex)->stop();
             lcd->display->clear();
-            lcd->display->printFixed(40, 22, "Line Tracking Mode", STYLE_BOLD);
-            voice->player->playFolder(1, 9);
+            lcd->printFixedCenter(22, "Line Tracking Mode", STYLE_NORMAL);
+            voice->player->playFolder(V_SYSTEM_FOLDER, V_LINE_TRACKING_MODE);
             delay(2000);
         }
         break;
@@ -183,6 +184,7 @@ void CarOs::runCarMode()
 {
     uint32_t data = readIR();
     switchMode(data);
+    double *distances = readUltrasonic();
     modes.at(currentModeIndex)->run();
 }
 
@@ -196,26 +198,17 @@ uint32_t CarOs::readIR()
     return data;
 }
 
+double *CarOs::readUltrasonic()
+{
+    double *distances = ultrasonicArray->getDistances(U_TEMPRTURE);
+    for (auto &mode : modes)
+    {
+        mode->ultrasonicRecieved(distances);
+    }
+    return distances;
+}
+
 void CarOs::main()
 {
     runCarMode();
-
-    // double *dist = ultrasonicArray->getDistances();
-    // double avgDistance = 0;
-    // for (uint8_t i = 0; i < 3; i++)
-    // {
-    //     avgDistance += dist[i];
-
-    //     Serial.print(i);
-    //     Serial.print(":");
-    //     Serial.println(dist[i]);
-    // }
-    // avgDistance = avgDistance / 3;
-    // if (avgDistance > 0 && avgDistance < 10)
-    // {
-    //     carEngine->back(150);
-    //     carEngine->stop();
-    //     avgDistance = 0;
-    // }
-    // delay(500);
 }

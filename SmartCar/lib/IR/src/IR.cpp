@@ -11,6 +11,7 @@ namespace Modules
 
     IR::~IR()
     {
+        //this->irrecv->blink13(1);
         this->irrecv->disableIRIn();
         delete this->irrecv;
     }
@@ -33,12 +34,19 @@ namespace Modules
      */
     uint32_t IR::read()
     {
+        uint32_t value = 999999;
         if (this->irrecv->decode(&results))
         {
             this->irrecv->resume();
-            uint32_t value = this->results.value;
-            return value;
+            if (this->results.isRepeat)
+            {
+                return lastValue;
+            }
+            else
+            {
+                return lastValue = this->results.value;
+            }
         }
-        return 999999;
+        return value;
     }
 } // namespace Modules

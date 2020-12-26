@@ -17,9 +17,11 @@ namespace Mode
         Modules::Engine *engine;
         Modules::Voice *voice;
         const uint8_t mode = 0;
+        unsigned long startActionMillis;
 
     private:
         uint32_t irData;
+        double *ultrasonicDistances;
 
     public:
         IRMode(Modules::IR *ir, Modules::Engine *engine, Modules::Voice *voice);
@@ -27,6 +29,7 @@ namespace Mode
         virtual void run();
         virtual void stop();
         virtual void irDataRecieved(uint32_t data);
+        virtual void ultrasonicRecieved(double *distances);
     };
 } // namespace Mode
 #endif

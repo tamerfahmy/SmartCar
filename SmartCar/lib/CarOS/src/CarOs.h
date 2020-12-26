@@ -54,5 +54,6 @@ private:
     static void runCarMode();
     static void switchMode(uint32_t mode);
     static uint32_t readIR();
+    static double *readUltrasonic();
 };
 #endif

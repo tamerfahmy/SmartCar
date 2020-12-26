@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "IRremote.h"
 #include "BaseModule.h"
+#include "OSConstants.h"
 
 namespace Modules
 {
@@ -12,6 +13,8 @@ namespace Modules
     {
     private:
         uint8_t ir_rcv_pin;
+        const uint32_t repeateValue = IR_DEFAULT;
+        uint32_t lastValue;
 
     public:
         IRrecv *irrecv;

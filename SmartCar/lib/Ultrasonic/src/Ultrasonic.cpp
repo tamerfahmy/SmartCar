@@ -50,7 +50,7 @@ namespace Modules
      */
     double Ultrasonic::getDistance(uint8_t i, float temperature)
     {
-        delay(50);
+        //delay(50);
         // Make sure that trigger pin is LOW.
         digitalWrite(this->trgPins[i], LOW);
         delayMicroseconds(2);
@@ -81,5 +81,16 @@ namespace Modules
         }
 
         return distances;
+    }
+
+    double Ultrasonic::getAvgDistance(float temperature = U_TEMPRTURE)
+    {
+        double *dist = getDistances(temperature);
+        double avgDistance = 0;
+        for (uint8_t i = 0; i < 3; i++)
+        {
+            avgDistance += dist[i];
+        }
+        return avgDistance / 3;
     }
 } // namespace Modules

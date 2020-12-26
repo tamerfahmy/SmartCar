@@ -6,14 +6,14 @@
 #include "BaseModule.h"
 
 #define FORWARD 0
-#define BACKWARD 0
-#define RIGHT 0
-#define LEFT 0
-#define FORWARD_LEFT 0
-#define FORWARD_RIGHT 0
-#define BACKWARD_LEFT 0
-#define BACKWARD_RIGHT 0
-#define STOP 0
+#define BACKWARD 1
+#define RIGHT 2
+#define LEFT 3
+#define FORWARD_LEFT 4
+#define FORWARD_RIGHT 5
+#define BACKWARD_LEFT 6
+#define BACKWARD_RIGHT 7
+#define STOP 8
 
 namespace Modules
 {

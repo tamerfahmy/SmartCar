@@ -12,6 +12,7 @@ namespace Mode
         virtual void run() { return; };
         virtual void stop() { return; };
         virtual void irDataRecieved(uint32_t data) { return; };
+        virtual void ultrasonicRecieved(double* distances) { return; };
     };
 } // namespace Mode
 #endif

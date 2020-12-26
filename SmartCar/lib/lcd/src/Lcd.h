@@ -17,10 +17,11 @@ namespace Modules
     public:
         Lcd();
         ~Lcd();
-        void splash();
-        void printLine(char *msg, bool clearDisplay, int x, int y, int iSize);
         virtual bool init();
         virtual void test();
+        void splash();
+        void printLine(char *msg, bool clearDisplay, int x, int y, int iSize);
+        void printFixedCenter(lcdint_t y, char *text, EFontStyle style = STYLE_NORMAL);
     };
 } // namespace Modules
 #endif

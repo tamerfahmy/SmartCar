@@ -23,6 +23,7 @@ namespace Modules
             display->getInterface().flipHorizontal(1);
             display->getInterface().flipVertical(1);
         }
+        display->invertColors();
         display->fill(0x00);
         display->setFixedFont(ssd1306xled_font8x16);
         initialized = true;
@@ -47,6 +48,15 @@ namespace Modules
             delay(2000);
         }
     }
+
+    void Lcd::printFixedCenter(lcdint_t y, char *text, EFontStyle style)
+    {
+        lcduint_t x = (128 - display->getFont().getTextSize(text)) / 2;
+        if (x < 0)
+            x = 0;
+        display->printFixed(x, y, text, style);
+    }
+    
     void Lcd::printLine(char *msg, bool clearDisplay, int x, int y, int iSize)
     {
         // if (clearDisplay)
